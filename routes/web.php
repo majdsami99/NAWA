@@ -36,5 +36,5 @@ Route::resource('/admin/products', ProductController::class);
 Route::resource('/admin/categories', CategoryController::class);
 
 
-
-
+//
+//
