@@ -15,7 +15,7 @@ class product extends Model
         'name','slug' , 'category_id', 'description', 'short_descripion','price',
         'compare_price' , 'image','status'
     ];
-
+   
 
     public static function statusOptions()
     {

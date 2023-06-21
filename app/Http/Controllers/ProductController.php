@@ -41,15 +41,17 @@ class ProductController extends Controller
         return view('admin.products.create',[
             'product' => new Product(),
             'categories' => $categories ,
-            'status_options'=> [
+            /*'status_options'=> [
                 'active'=>'active',
                 'archived'=>'archived',
                 'draft'=>'darft',]
-        ]);
+        */
+        'status_options'=> product::statusOptions()
+    ]);
     }
 
     /**Store a newly created resource in storage*/
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
        // $data=$request->validated();
        // if($request->hasFile('image')){
@@ -59,7 +61,10 @@ class ProductController extends Controller
 
 
         //}
-       // $product=product::create($data);
+
+       // dd=($request->all());
+       //
+       $product=product::create($request-> all()); //طريقة اخرى لاستدعاء القيم من خلال المودل بس لازم يكون اسم الحقل فالفورم نفسه فالداتا بيز
 
          // $request ->input('slug');
         /*$rules=[
@@ -76,10 +81,10 @@ class ProductController extends Controller
             //'image'=>'file|mimes:png,jbg'
             //'image'=>'file|mimetypes:image.png,image.jbg' (more save than mimes)*/
 
-        $rules = $this->rules();
-        $messages = $this->messages();
-        $request->validate($rules,$messages);
-        $product = new Product();
+        ///$rules = $this->rules();
+        //$messages = $this->messages();
+       // $request->validate($rules,$messages);
+        /*$product = new Product();
 
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
@@ -92,7 +97,7 @@ class ProductController extends Controller
         $product->compare_price = $request->input('compare_price');
         $product->status=$request->input('status','active');
 
-        $product->save();
+        $product->save();*/
 
         return redirect()
           ->route('products.index')
@@ -125,10 +130,7 @@ class ProductController extends Controller
 
         return view('admin.products.edit', ['product' => $product,
             'categories' => $categories ,
-            'status_options'=> [
-                'active'=>'active',
-                'archived'=>'archived',
-                'draft'=>'darft',]
+            'status_options'=> product::statusOptions()
         ]);
 
     }
@@ -138,7 +140,9 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, product $product)
     {
-        $rules = [
+                
+                $product=product::create($request-> all());
+        /*$rules = [
             'name'=>'required|max:255|min:3',
             'slug'=> 'required|unique:products,slug',
             'category_id'=> 'nullable|int|exists:categories,id',
@@ -168,7 +172,7 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->compare_price = $request->input('compare_price');
         $product->status=$request->input('status','active');
-        $product->save();
+        $product->save();*/
 
         ///from nora
         $data = $request->validated();
@@ -204,11 +208,11 @@ class ProductController extends Controller
         //$product->delete();
 
         return redirect()
-          ->route('products.index')
-          ->with('success','"product({$product->name})deleted"') ;//get
+        ->route('products.index')
+        ->with('success','"product({$product->name})deleted"') ;//get
 
     }
-       protected function messages (){
+      /* protected function messages (){
 
         return[
             'required'=>'this fieled is required',
@@ -216,7 +220,7 @@ class ProductController extends Controller
             'name.required' =>' the product name is mandatory',
         ];
        }
-       protected function rules ($id =0){
+      /* protected function rules ($id =0){
         return [
             'name'=>'required|max:255|min:3',
             'slug'=> 'required|unique:products,slug',
@@ -232,5 +236,5 @@ class ProductController extends Controller
 
         ];
 
-       }
+       }تم النقل الى برودكت ريكوست في ملف الكنترولز*/
 }

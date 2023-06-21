@@ -37,9 +37,11 @@ class CategoryController extends Controller
             'name' => 'required|max:255|min:3',
             //'ID'   =>  'nullable|int|exists:categories,id',
         ];
+        $categry=category::create($request-> all());
 
         $request->validate($rules);
-        $category = new category();
+
+        /*$category = new category();
 
         $category->name = $request->input('name');
         //$category->ID = $request->input('ID');
@@ -48,7 +50,7 @@ class CategoryController extends Controller
 
 
         $category->save();
-
+*/
         return redirect()->route('categories.index');
     }
 
@@ -80,7 +82,7 @@ class CategoryController extends Controller
             //'ID'   =>  'nullable|int|exists:categories,id',
         ];
         $messages= [
-            
+
         ];
 
         $request->validate($rules);

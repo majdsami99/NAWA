@@ -24,18 +24,20 @@ class ProductRequest extends FormRequest
        $product= $this ->route('product',0);
        $id=$product ? $product ->id:0 ;
         return[
-            ' name' => 'required|max:255|min:3',
-            'slug' => 'required|unique:products,slug,$id',
-            'category_id' => 'nullable|int|exists:categories,id',
-            'description' => 'nullable|string',
-            'short_description' =>'nullable|string|max:500',
-            'price' => 'required|numeric|min:0',
-            'compare_price' => 'nullable|numeric|min:0|gt:price',
-            'image' => 'nullable|image|dimensions:min_width=200,min_height=100|max:1024',
-            'status'=> 'required|in:active,archived,draft',
+            'name'=>'required|max:255|min:3',
+            'slug'=> 'required|unique:products,slug',
+            'category_id'=> 'nullable|int|exists:categories,id',
+            'descripton'=> 'nullable|string',
+            'short_description'=> 'nullable|string|max:500',
+            'price'=>'required|numeric|min:0',
+            'compare_price'=> 'nullable|numeric|min:0,gt:price',
+            // 'image'=>'file:=|mimetypes:image/png,image/jpg',
+            // 'image'=>'file|mimes:png,jpg',
+            'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
+            'status'=>'required|in:active,draft,archived'
 
+        ];
 
-            ];
 
     }
     public function messages(): array
