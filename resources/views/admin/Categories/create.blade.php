@@ -18,8 +18,12 @@
       @csrf
       <h2 class="mb-4 fs-3">New Category</h2>
       <div class="form-floating mb-3">
-        <input type="text"  required class="form-control" id="name" name="name" placeholder="categoryName">
         <label for="name">Category Name</label>
+        <input type="text"  required class="form-control" id="name" name="name" placeholder="categoryName">
+        @error('name')
+        <p class="text-danger">{{$message}} </p>
+
+        @enderror
       </div>
 
       <button type="submit" class="btn btn-success">Success</button>

@@ -75,6 +75,15 @@ class CategoryController extends Controller
     public function update(Request $request, category $category)
     {
         //
+        $rules = [
+            'name' => 'required|max:255|min:3',
+            //'ID'   =>  'nullable|int|exists:categories,id',
+        ];
+        $messages= [
+            
+        ];
+
+        $request->validate($rules);
         $category = category::findOrFail($category->id);
         $category->name = $request->input('name');
         $category->save();

@@ -41,12 +41,14 @@ class ProductController extends Controller
         return view('admin.products.create',[
             'product' => new Product(),
             'categories' => $categories ,
+            'status_options'=> [
+                'active'=>'active',
+                'archived'=>'archived',
+                'draft'=>'darft',]
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    /**Store a newly created resource in storage*/
     public function store(Request $request)
     {
        // $data=$request->validated();
@@ -74,20 +76,9 @@ class ProductController extends Controller
             //'image'=>'file|mimes:png,jbg'
             //'image'=>'file|mimetypes:image.png,image.jbg' (more save than mimes)*/
 
-        $rules = [
-            'name'=>'required|max:255|min:3',
-            'slug'=> 'required|unique:products,slug',
-            'category_id'=> 'nullable|int|exists:categories,id',
-            'descripton'=> 'nullable|string',
-            'short_description'=> 'nullable|string|max:500',
-            'price'=>'required|numeric|min:0',
-            'compare_price'=> 'nullable|numeric|min:0,gt:price',
-            // 'image'=>'file:=|mimetypes:image/png,image/jpg',
-            // 'image'=>'file|mimes:png,jpg',
-            'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
-
-        ];
-        $request->validate($rules);
+        $rules = $this->rules();
+        $messages = $this->messages();
+        $request->validate($rules,$messages);
         $product = new Product();
 
         $product->name = $request->input('name');
@@ -99,6 +90,7 @@ class ProductController extends Controller
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
         $product->compare_price = $request->input('compare_price');
+        $product->status=$request->input('status','active');
 
         $product->save();
 
@@ -133,8 +125,12 @@ class ProductController extends Controller
 
         return view('admin.products.edit', ['product' => $product,
             'categories' => $categories ,
+            'status_options'=> [
+                'active'=>'active',
+                'archived'=>'archived',
+                'draft'=>'darft',]
         ]);
-    
+
     }
 
     /**
@@ -142,6 +138,26 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, product $product)
     {
+        $rules = [
+            'name'=>'required|max:255|min:3',
+            'slug'=> 'required|unique:products,slug',
+            'category_id'=> 'nullable|int|exists:categories,id',
+            'descripton'=> 'nullable|string',
+            'short_description'=> 'nullable|string|max:500',
+            'price'=>'required|numeric|min:0',
+            'compare_price'=> 'nullable|numeric|min:0,gt:price',
+            // 'image'=>'file:=|mimetypes:image/png,image/jpg',
+            // 'image'=>'file|mimes:png,jpg',
+            'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
+            'status'=>'required|in:active,draft,archived'
+
+        ];
+        $messages = [
+            'required'=>'this fieled is required',
+            'unique'=>'this value already taken',
+        ];
+        $request->validate($rules,$messages);
+
         $product = Product::findOrFail($product->id); // return model
 
         $product->name = $request->input('name');
@@ -151,7 +167,7 @@ class ProductController extends Controller
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
         $product->compare_price = $request->input('compare_price');
-
+        $product->status=$request->input('status','active');
         $product->save();
 
         ///from nora
@@ -192,4 +208,29 @@ class ProductController extends Controller
           ->with('success','"product({$product->name})deleted"') ;//get
 
     }
+       protected function messages (){
+
+        return[
+            'required'=>'this fieled is required',
+            'slug.unique'=>'this value already taken',
+            'name.required' =>' the product name is mandatory',
+        ];
+       }
+       protected function rules ($id =0){
+        return [
+            'name'=>'required|max:255|min:3',
+            'slug'=> 'required|unique:products,slug',
+            'category_id'=> 'nullable|int|exists:categories,id',
+            'descripton'=> 'nullable|string',
+            'short_description'=> 'nullable|string|max:500',
+            'price'=>'required|numeric|min:0',
+            'compare_price'=> 'nullable|numeric|min:0,gt:price',
+            // 'image'=>'file:=|mimetypes:image/png,image/jpg',
+            // 'image'=>'file|mimes:png,jpg',
+            'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
+            'status'=>'required|in:active,draft,archived'
+
+        ];
+
+       }
 }
