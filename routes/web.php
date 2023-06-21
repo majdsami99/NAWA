@@ -25,12 +25,12 @@ Route::get('/', function () {
 // Route::get('/admin/products', [ProductController::class, 'create']);
 
 // Route::post('/admin/products', [ProductController::class, 'store']);
-// Route::get('/admin/products', [ProductController::class, 'show']);
+// Route::get('/admin/products/{id}', [ProductController::class, 'show']);
 
-// Route::get('/admin/products', [ProductController::class, 'edit']);
-// Route::put('/admin/products', [ProductController::class, 'update']);
+// Route::get('/admin/products/{id}', [ProductController::class, 'edit']);
+// Route::put('/admin/products/{id}', [ProductController::class, 'update']);
 
-// Route::delete('/admin/products', [ProductController::class, 'destroy']);
+// Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']);
 
 Route::resource('/admin/products', ProductController::class);
 Route::resource('/admin/categories', CategoryController::class);

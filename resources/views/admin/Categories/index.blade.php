@@ -43,6 +43,7 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
   </script>
 </body>
+/////كيف ممكن اربط الاي دي مع ترتيب الكاتوقوري
 
 </html> --}}
 
@@ -52,7 +53,7 @@
   <h2 class="mb-4 fs-3">
     <?= $title ?>
   </h2>
-  <a class="btn btn-primary m-5" href="{{route("categories.create")}}" role="button">Create Proudct</a>
+  <a class="btn btn-primary m-5" href="{{route("categories.create")}}" role="button">Create category</a>
   <table class="table">
     <thead>
       <tr>

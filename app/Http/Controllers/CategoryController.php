@@ -33,9 +33,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|max:255|min:3',
+            //'ID'   =>  'nullable|int|exists:categories,id',
+        ];
+
+        $request->validate($rules);
         $category = new category();
 
         $category->name = $request->input('name');
+        //$category->ID = $request->input('ID');
+        $category->name = $request->input('name');
+
+
 
         $category->save();
 
@@ -57,7 +67,6 @@ class CategoryController extends Controller
     {
         $category = category::findOrFail($category->id);
         return view('admin.categories.edit', ['category' => $category]);
-
     }
 
     /**
@@ -70,7 +79,6 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         $category->save();
         return redirect()->route('categories.index');
-
     }
 
     /**

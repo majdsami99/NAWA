@@ -37,7 +37,7 @@ class ProductController extends Controller
     public function create()
     {
         //
-        $categories = category::all();
+        $categories = category::all();///collection array
         return view('admin.products.create',[
             'product' => new Product(),
             'categories' => $categories ,
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
         //}
        // $product=product::create($data);
-        
+
          // $request ->input('slug');
         /*$rules=[
             'name'=>'required|max:225|min:3',
@@ -92,6 +92,9 @@ class ProductController extends Controller
 
         $product->name = $request->input('name');
         $product->slug = $request->input('slug');
+        $product->category_id = $request->input('category_id');
+
+
         $product->description = $request->input('description');
         $product->short_description = $request->input('short_description');
         $product->price = $request->input('price');
@@ -100,8 +103,8 @@ class ProductController extends Controller
         $product->save();
 
         return redirect()
-        ->route('products.index')
-        ->with('success',"Product $product->name Created");
+          ->route('products.index')
+          ->with('success',"product({$product->name})created");//add flash mesge
     }
 
     /**
@@ -119,12 +122,19 @@ class ProductController extends Controller
     {
         //$product = Product::where('id' , '=',$product->id)->first(); // return model
         // $product = Product::find($product->id); // return model
+        ///ولكن ممكن
         $product = Product::findOrFail($product->id); // return model
 
         // if(!$product){
         //     abort(404);
         // }
-        return view('admin.products.edit', ['product' => $product]);
+        $categories = category::all();///collection array
+
+
+        return view('admin.products.edit', ['product' => $product,
+            'categories' => $categories ,
+        ]);
+    
     }
 
     /**
@@ -132,7 +142,19 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, product $product)
     {
-        ///from nora 
+        $product = Product::findOrFail($product->id); // return model
+
+        $product->name = $request->input('name');
+        $product->slug = $request->input('slug');
+        $product->category_id = $request->input('category_id');
+        $product->description = $request->input('description');
+        $product->short_description = $request->input('short_description');
+        $product->price = $request->input('price');
+        $product->compare_price = $request->input('compare_price');
+
+        $product->save();
+
+        ///from nora
         $data = $request->validated();
         if($request->hasFile('image')){
           $file =$request->file('image');//return UploadedFile object
@@ -144,18 +166,10 @@ class ProductController extends Controller
           if ($old_image&&$old_image != $product->image){
               Storage::disk('puplic')->delete($old_image);
           }
-       /* $product = Product::findOrFail($product->id); // return model
 
-        $product->name = $request->input('name');
-        $product->slug = $request->input('slug');
-        $product->description = $request->input('description');
-        $product->short_description = $request->input('short_description');
-        $product->price = $request->input('price');
-        $product->compare_price = $request->input('compare_price');
-
-        $product->save();
-
-        return redirect()->route('products.index');*/
+          return redirect()
+          ->route('products.index')
+          ->with('success',"product({$product->name})update") ;//get
     }
 
     /**
@@ -170,7 +184,12 @@ class ProductController extends Controller
         // );
 
         Product::destroy($product->id);
-        return redirect()->route('products.index');
+        //$product = product::findorfail()('id');
+        //$product->delete();
+
+        return redirect()
+          ->route('products.index')
+          ->with('success','"product({$product->name})deleted"') ;//get
 
     }
 }

@@ -44,13 +44,19 @@
 </body>
 
 </html> --}}
-@extends('layouts.admin')
+@extends('layouts.admin') <!--/////امتداد الملف الي جبنا منو التنسيق--->
 @section('content')
+
 <div class="container">
   <h2 class="mb-4 fs-3">
     <?= $title ?>
   </h2>
-  <a class="btn btn-primary m-5" href="{{route("products.create")}}" role="button">Create Proudct</a>
+  <a class="btn btn-primary m-3" href="{{route("products.create")}}" role="button">Create Proudct</a>
+  @if(session()->has('success'))
+  <div class ="alert alert-success"> <!--الرسالة بطبعها من خلال السيشن لانها تخزنت فيها -->
+    {{ session('success')}}
+  </div>
+  @endif
   <table class="table">
     <thead>
       <tr>

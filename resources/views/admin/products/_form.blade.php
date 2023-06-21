@@ -12,7 +12,7 @@
 <div class="container">
     <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data">
         @csrf
-        <h2 class="mb-4 fs-3">New product</h2>
+        <h2 class="mb-4 fs-3"></h2>
 
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="name" @error('name') is-invalid @enderror name="name" placeholder="ProductName">
@@ -27,14 +27,17 @@
             <input type="text" class="form-control" id="slug" name="slug" placeholder="URL Slug">
             <label for="slug">URL Slug</label>
         </div>
+
         <div class="form-floating mb-3">
-            <label for="category">category</label>
-            <select name="category_id" id="">
+            <select name="category_id" id="category_id" class="form-select form-control">
+
+
                 @foreach ($categories as $category)
                 <option @selected($category->id == $product->category_id) value="{{$category->id}}">{{$category->name}}
                 </option>
                 @endforeach
             </select>
+            <label for="category">category</label>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="description" name="description" placeholder="Description">
@@ -61,7 +64,20 @@
             <label for="image">image</label>
         </div>
 
-        <button type="submit" class="btn btn-success">Success</button>
+        <button type="submit" class="btn btn-success">{{$submit_label ?? 'save'}}</button>
 
     </form>
 </div>
+
+
+{{--
+                <option>cat 2</option>
+                <option>cat 3</option>
+                <option>cat 4</option>
+                <option>cat 5</option>
+                <option>cat 6</option>
+                <option>cat 7</option>
+                <option>cat 8</option>
+                <option>cat 9</option>
+                <option>cat 10</option> --}}
+
