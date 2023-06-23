@@ -190,7 +190,7 @@ class ProductController extends Controller
           $path= $file ->store('uploads/images','public');//return file path after store
           $data['image'] =$path;
         }
-        
+
 
           $old_image = $product->image;
           $product ->update($data);
