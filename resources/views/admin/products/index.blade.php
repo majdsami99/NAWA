@@ -74,7 +74,10 @@
       @foreach ( $products as $product )
       <tr>
         <td>@if($product->image)
+            <a href="{{asset('storage/' . $product->image)}}">
             <img src="{{asset('storage/' . $product->image)}}"  width="60" alt="">
+           
+            </a>
             @else
             <img src="https://fakeimg.pl/60x60" alt="">
             @endif

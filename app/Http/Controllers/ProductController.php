@@ -218,6 +218,8 @@ class ProductController extends Controller
         Product::destroy($product->id);
         if ($product->image){
             Storage::disk('puplic')->delete($product->image);
+           // <img src="{{storage::disk('puplic')->delete($product->image)}}" width="60" alt="">
+           //<img src="{{storage::disk('puplic')->delete($product->image)}}" width="60" alt="">
         }////ليتم حذف صور المنتج عند حذف المنتج
 
         //$product = product::findorfail()('id');
