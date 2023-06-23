@@ -53,7 +53,8 @@ class ProductController extends Controller
     /**Store a newly created resource in storage*/
     public function store(ProductRequest $request)
     {
-       // $data=$request->validated();
+       $data=$request->validated();
+
        // if($request->hasFile('image')){
            // $file=$request->file('image');
           //  $file->store('upload','public');//return file path after stroe
@@ -64,8 +65,16 @@ class ProductController extends Controller
 
        // dd=($request->all());
        //
-       $product=product::create($request-> all()); //طريقة اخرى لاستدعاء القيم من خلال المودل بس لازم يكون اسم الحقل فالفورم نفسه فالداتا بيز
+       //$product=product::create($request-> all()); //طريقة اخرى لاستدعاء القيم من خلال المودل بس لازم يكون اسم الحقل فالفورم نفسه فالداتا بيز
+       if($request->hasFile('image')){
+        $file =$request->file('image');
+        //$file ->getMimeType();
+        $path= $file ->store('uploads/images',
+        ['disk'=>'public' ]);
+        $data['image']=$path;
 
+       }
+       $product=product::create($data);
          // $request ->input('slug');
         /*$rules=[
             'name'=>'required|max:225|min:3',
@@ -140,8 +149,8 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, product $product)
     {
-                
-                $product=product::create($request-> all());
+                //$product=product::FindOrFail($id); لمنع الهكر
+                //$product->update($request-> validated());
         /*$rules = [
             'name'=>'required|max:255|min:3',
             'slug'=> 'required|unique:products,slug',
@@ -178,14 +187,17 @@ class ProductController extends Controller
         $data = $request->validated();
         if($request->hasFile('image')){
           $file =$request->file('image');//return UploadedFile object
-          $path= $file ->store('uploaads/images','public');//return file path after store
+          $path= $file ->store('uploads/images','public');//return file path after store
           $data['image'] =$path;
         }
+        
+
           $old_image = $product->image;
           $product ->update($data);
           if ($old_image&&$old_image != $product->image){
               Storage::disk('puplic')->delete($old_image);
           }
+
 
           return redirect()
           ->route('products.index')
@@ -195,7 +207,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(product $product) //فكرة المودل بايدنق
     {
         // $deleted = $product->delete();
         // return response()->json(
@@ -204,6 +216,10 @@ class ProductController extends Controller
         // );
 
         Product::destroy($product->id);
+        if ($product->image){
+            Storage::disk('puplic')->delete($product->image);
+        }////ليتم حذف صور المنتج عند حذف المنتج
+
         //$product = product::findorfail()('id');
         //$product->delete();
 

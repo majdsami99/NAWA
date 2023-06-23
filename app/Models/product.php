@@ -14,9 +14,8 @@ class product extends Model
     protected $fillable = [
         'name','slug' , 'category_id', 'description', 'short_descripion','price',
         'compare_price' , 'image','status'
-    ];
-   
-
+    ];//////////FOR DEFUALT VALUES
+    //protected $guarded= []; fillable more secure
     public static function statusOptions()
     {
         return[

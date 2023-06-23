@@ -60,6 +60,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th>Id</th>
         <th>Name</th>
         <th>Category</th>
@@ -72,8 +73,8 @@
     <tbody>
       @foreach ( $products as $product )
       <tr>
-        <td>
-          {{$product->id}}</td>
+        <td><img src="{{asset('storage/' . $product->image)}}"  width="60" alt=""> </td>
+        <td>{{$product->id}}</td>
         <td>{{$product->name}}</td>
         <td>{{$product->category_name}}</td>
         <td>{{$product->price}}</td>

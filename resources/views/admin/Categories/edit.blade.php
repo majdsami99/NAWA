@@ -15,7 +15,7 @@
         <form action="{{route('categories.update',$category->id)}}" method="post">
             @csrf
             @method('PUT')
-            <h2 class="mb-4 fs-3">New Category</h2>
+            <h2 class="mb-4 fs-3">EDIT Category</h2>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="name" name="name" placeholder="categoryName"
                 value="{{$category->name}}">
