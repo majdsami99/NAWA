@@ -73,7 +73,12 @@
     <tbody>
       @foreach ( $products as $product )
       <tr>
-        <td><img src="{{asset('storage/' . $product->image)}}"  width="50" alt=""> </td>
+        <td>@if($product->image)
+            <img src="{{asset('storage/' . $product->image)}}"  width="60" alt="">
+            @else
+            <img src="https://fakeimg.pl/60x60" alt="">
+            @endif
+           </td>
         <td>{{$product->id}}</td>
         <td>{{$product->name}}</td>
         <td>{{$product->category_name}}</td>
