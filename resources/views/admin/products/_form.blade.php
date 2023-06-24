@@ -49,6 +49,19 @@
             <input type="text" class="form-control" id="short_description" name="short_description" placeholder="Short Description"
             value="{{old('short_description',$product->short_description)}}">
         </div>
+        <div class="mb-3">
+            @if($product->image)
+    <img src="{{asset('storage/' . $product->image)}}"  width="100" alt="">
+   @else
+    <img src="https://fakeimg.pl/100x100" alt="">
+    @endif </a> </td>
+        </div>
+        <div class="mb-3"></div>
+        <div>
+            <input type="file" class="form-control" id="gallery" name="gallery[]" multiple placeholder="product gallery">
+
+            <label for="image"> gallery image</label>
+        </div>
 
 
 
@@ -97,10 +110,25 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="image">image</label>
-                    <input type="file" class="form-control" id="image" name="image" placeholder="image">
-                </div>
+                    @if($product->image)
+            <img src="{{asset('storage/' . $product->image)}}"  width="100" alt="">
+           @else
+            <img src="https://fakeimg.pl/100x100" alt="">
+            @endif </a> </td>
 
+                    <input type="file" class="form-control" id="image" name="image" placeholder="image">
+
+                    <label for="image"> product image</label>
+                </div>
+                @if ($gallery ?? false)
+                <div class="row">
+                    @foreach ($gallery as $image)
+                    <div class="col-md-3">
+                        <img src="/storage{{$image->url}}" class="img_fluid" alt="">
+                    </div>
+                    @endforeach
+                </div>
+                @endif
 
     </div>
   </div>
@@ -121,4 +149,5 @@
                 <option>cat 8</option>
                 <option>cat 9</option>
                 <option>cat 10</option> --}}
+
 

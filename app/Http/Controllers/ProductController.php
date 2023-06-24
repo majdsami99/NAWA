@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\category;
 use App\Models\product;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class ProductController extends Controller
 {
@@ -23,7 +25,7 @@ class ProductController extends Controller
                 'products.*',
                 'categories.name as category_name'
             ])
-            ->get();
+            ->paginate(5);
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -107,6 +109,15 @@ class ProductController extends Controller
         $product->status=$request->input('status','active');
 
         $product->save();*/
+        if($request->hasFile('gallery')){
+            foreach ( $request->file('gallery')as $file) {
+              ProductImages::create([
+                  'product_id'=>$product->id ,
+                  'image'=>$file->store('uploads/images','public'),
+
+              ]);
+            }
+            }
 
         return redirect()
           ->route('products.index')
@@ -135,11 +146,15 @@ class ProductController extends Controller
         //     abort(404);
         // }
         $categories = category::all();///collection array
+        $gallery=ProductImages::where('product_id','=',$product->id)
+        ->get();
 
 
         return view('admin.products.edit', ['product' => $product,
             'categories' => $categories ,
-            'status_options'=> product::statusOptions()
+            'status_options'=> product::statusOptions(),
+            'gallery'=>$gallery,
+
         ]);
 
     }
@@ -194,8 +209,17 @@ class ProductController extends Controller
 
           $old_image = $product->image;
           $product ->update($data);
-          if ($old_image&&$old_image != $product->image){
+          if ($old_image && $old_image != $product->image){
               Storage::disk('puplic')->delete($old_image);
+          }
+          if($request->hasFile('gallery')){
+          foreach ( $request->file('gallery')as $file) {
+            ProductImages::create([
+                'product_id'=>$product->id ,
+                'image'=>$file->store('uploads/images','public'),
+
+            ]);
+          }
           }
 
 
@@ -217,10 +241,10 @@ class ProductController extends Controller
 
         Product::destroy($product->id);
         if ($product->image){
-            Storage::disk('puplic')->delete($product->image);
+            Storage::disk('puplic')->delete($product->image);}
            // <img src="{{storage::disk('puplic')->delete($product->image)}}" width="60" alt="">
-           //<img src="{{storage::disk('puplic')->delete($product->image)}}" width="60" alt="">
-        }////ليتم حذف صور المنتج عند حذف المنتج
+           //<img src="{{storage::disk('puplic')->url($product->image)}}" width="60" alt="">
+        ////ليتم حذف صور المنتج عند حذف المنتج
 
         //$product = product::findorfail()('id');
         //$product->delete();

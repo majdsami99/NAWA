@@ -57,17 +57,30 @@
   <table class="table">
     <thead>
       <tr>
+        <th></th>
         <th>Id</th>
         <th>Name</th>
         <th>Edit</th>
         <th>Delete</th>
+
       </tr>
     </thead>
     <tbody>
       @foreach ( $categories as $category )
       <tr>
+
+        <td> <a href="{{asset('storage/' . $category->image)}}">
+            {{--<img src="{{asset('storage/' . $product->imagel)}}"  width="60" alt="">--}}
+            @if($category->image)
+            <img src="{{asset('storage/' . $category->image)}}"  width="60" alt="">
+           @else
+            <img src="https://fakeimg.pl/60x60" alt="">
+            @endif </a> </td></td>
+    </td>
         <td>{{$category->id}}</td>
+
         <td>{{$category->name}}</td>
+
         <td><a href="{{route('categories.edit' ,$category->id)}}" class="btn btn-sm btn-outline-dark"><i
               class="far fa-edit"></i> Edit</a></td>
         <td><form action="{{route('categories.destroy',$category->id)}}" method="post">
@@ -75,7 +88,8 @@
             @method('DELETE')
             <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"> delete</i></button>
           </form>
-        </td>
+
+
       </tr>
       @endforeach
     </tbody>

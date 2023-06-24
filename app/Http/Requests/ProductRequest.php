@@ -35,7 +35,9 @@ class ProductRequest extends FormRequest
             // 'image'=>'file:=|mimetypes:image/png,image/jpg',
             // 'image'=>'file|mimes:png,jpg',
             'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
-            'status'=>'required|in:active,draft,archived'
+            'status'=>'required|in:active,draft,archived',
+            'gallery'=> 'nullable|array',
+            'gallery.*'=>'image',
 
         ];
 

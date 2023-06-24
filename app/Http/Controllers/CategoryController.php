@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class CategoryController extends Controller
 {
@@ -33,10 +35,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $rules = [
             'name' => 'required|max:255|min:3',
+            //'status'=>'required|in:active,draft,archived'
             //'ID'   =>  'nullable|int|exists:categories,id',
         ];
+        $data=$request->validated();
+            if($request->hasFile('image')){
+                $file=$request->file('image');
+                $path=$file->store('uploads');
+                $data['image']=$path;
+            }
+
         $categry=category::create($request-> all());
 
         $request->validate($rules);
@@ -68,7 +79,16 @@ class CategoryController extends Controller
     public function edit(category $category)
     {
         $category = category::findOrFail($category->id);
-        return view('admin.categories.edit', ['category' => $category]);
+        //return view('admin.categories.edit', ['category' => $category]);
+
+
+        $categories = category::all();///collection array
+
+
+        return view('admin.categories.edit', ['category' => $category,
+            'categories' => $categories ,
+            //'status_options'=> category::statusOptions()
+        ]);
     }
 
     /**
@@ -89,8 +109,29 @@ class CategoryController extends Controller
         $category = category::findOrFail($category->id);
         $category->name = $request->input('name');
         $category->save();
-        return redirect()->route('categories.index');
-    }
+      
+            if($request->hasFile('image')){
+                $file=$request->file('image');
+                $path=$file->store('uploads');
+                $data['image']=$path;
+            }
+
+
+
+
+          $old_image = $category->image;
+          $category ->update($data);
+          if ($old_image && $old_image != $category->image){
+              Storage::disk('puplic')->delete($old_image);
+          }
+          return redirect()->route('categories.index');
+
+
+
+
+        }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -99,6 +140,8 @@ class CategoryController extends Controller
     {
         //
         category::destroy($category->id);
+        if ($category->image){
+            Storage::disk('puplic')->delete($category->image);}
         return redirect()->route('categories.index');
-    }
-}
+    }}
+

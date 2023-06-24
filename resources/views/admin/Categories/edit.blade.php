@@ -12,15 +12,55 @@
 <body>
 
     <div class="container">
-        <form action="{{route('categories.update',$category->id)}}" method="post">
+        <form action="{{route('categories.update',$category->id)}}" method="post"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <h2 class="mb-4 fs-3">EDIT Category</h2>
-            <div class="form-floating mb-3">
+            {{--<div class="form-floating mb-3">
                 <input type="text" class="form-control" id="name" name="name" placeholder="categoryName"
                 value="{{$category->name}}">
                 <label for="name">Category Name</label>
-              </div>
+              </div>--}}
+              <div class="row">
+
+                <div class="colum-md-8">
+                <div class="mb-3">
+                    <label for="name">category Name</label>
+                    <input type="text" class="form-control" id="name" @error('name') is-invalid @enderror name="name" placeholder="ProductName"
+                    value="{{old('name',$category->name)}}">
+                    @error('name')
+
+                    <p class="ivalid-feedback">{{$message}} </p>
+
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    {{--<label for="status">status</label>
+                    @foreach ($status_options as $key => $value)
+                     <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="status_{{$key}}" value="{{$key}}"
+                        @checked($key == old('status',$category->status))>
+                        <label class="form-check-label" for="status_{{$key}}">
+                          {{$value}}
+                          @endforeach
+                        </label>
+                      </div>
+                </div>--}}
+                      <div class="colum-md-4">
+
+                      <div class="form-floating mb-3">
+
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Compare category Image">
+                        <label for="image">category Image</label>
+                       {{--<img src="{{$category->image_url}}"  width="60" alt="">--}}
+                        @if( $category->image)
+                        <img src="{{asset('storage/' .  $category->image)}}"  width="100" alt="">
+                       @else
+                        <img src="https://fakeimg.pl/100x100" alt="">
+                        @endif
+
+                    </div></div>
+
 
             <button type="submit" class="btn btn-success">Success</button>
 

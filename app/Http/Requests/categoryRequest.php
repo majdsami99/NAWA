@@ -25,7 +25,9 @@ class categoryRequest extends FormRequest
         $category= $this ->route('category',new category());
         $id=$category ? $category ->id:0 ;
          return[
-             'name'=>'required|max:255|min:3'
+             'name'=>'required|max:255|min:3',
+             'image'=> 'nullable|image|dimensions:min_width=400,min_height=300|max:400',//kilobayte
+             'status'=>'required|in:active,draft,archived'
          ];
 
     }
