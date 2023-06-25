@@ -84,11 +84,16 @@
         <td>{{$product->id}}</td>
         <td>{{$product->name}}</td>
         <td>{{$product->deleted_at}}</td>
-        <td><a href="{{route('products.edit' ,$product->id)}}" class="btn btn-sm btn-outline-dark"><i class="far fa-edit"></i> Edit</a></td>
-        <td> <form action="{{route('products.destroy',$product->id)}}" method="post">
+        <td><form action="{{route('products.restore',$product->id)}}" method="post">
             @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"> delete</i></button>
+            @method('put')
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa-trash-restore"> restore</i></button>
+          </form>
+        </td>
+        <td> <form action="{{route('products.force-delete',$product->id)}}" method="post">
+            @csrf
+            @method('put')
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"> delte for ever</i></button>
           </form>
         </td>
       </tr>

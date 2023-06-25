@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Eloquent\addGlobalScope;
+use Illuminate\Database\Eloquent\Builder\addGlobalScope;
+
 use NumberFormatter;
 
 
-class product extends Model{
+class product extends Model {
     use HasFactory,SoftDeletes;
     const STATUS_ACTIVE = 'active';
     const STATUS_DRAFT = 'draft';
@@ -19,6 +23,22 @@ class product extends Model{
         'compare_price' , 'image','status'
     ];//////////FOR DEFUALT VALUES
     //protected $guarded= []; fillable more secure
+    /*protected static function booted()
+    {
+        static::addGlobalScope('owner',function(Builder $query){
+            $query->where('user_id','=',1);});
+
+    }*/
+    public function scopeActive(Builder $query){
+        $query->where('Status','=','active');
+
+    }
+    public function scopeStatus(Builder $query,$status){
+        $query->where('Status','=',$status);
+
+    }
+
+
     public static function statusOptions()
     {
         return[
@@ -42,12 +62,13 @@ class product extends Model{
 
 
              return ucwords($value) ;}
+
             /////// public function getPriceFormattedAttribute($value) للمهندس ضروري
          /*    {
                 $formater=new NumberFormatter('en',NumberFormatter::CURRENCY);
                 return  $formater->formatCurrency($this->price,'USD');
 
 
+*/
 
-             }*/
-}
+             }

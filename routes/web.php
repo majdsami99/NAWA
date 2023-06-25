@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,32 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//  ABOOD
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/admin/products', [ProductController::class, 'index']);
-// Route::get('/admin/products', [ProductController::class, 'create']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::post('/admin/products', [ProductController::class, 'store']);
-// Route::get('/admin/products/{id}', [ProductController::class, 'show']);
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// Route::get('/admin/products/{id}', [ProductController::class, 'edit']);
-// Route::put('/admin/products/{id}', [ProductController::class, 'update']);
+require __DIR__.'/auth.php'; //ملف مليان راتس
+require __DIR__.'/admin.php';
+//require __DIR__.'/shop.php';
 
-// Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']);
-
-Route::resource('/admin/products', ProductController::class);
-Route::get('/admin/products/trashed',[ProductController::class,'trashed'])
-->name('products.trashed');
-Route::put('/admin/products/trashed/{product}/restore',[ProductController::class,'restore'])
-->name('products.restore');
-Route::delete('/admin/products/{product}/force',[ProductController::class,'forceDelete'])
-->name('products.force-Delete');
-Route::resource('/admin/categories', CategoryController::class);
-
-
-//
-//

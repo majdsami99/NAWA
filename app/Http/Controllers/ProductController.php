@@ -25,7 +25,11 @@ class ProductController extends Controller
                 'products.*',
                 'categories.name as category_name'
             ])
+            //->where('user_id','=','2') //بدي بس المنتجات للزبون رقم واحد
+            //->withoutGlobalScope('owner')  زبطت
             ///->withTrashed()عرض المحزوف وغير المحزوف من السوفت ديليت
+            //->active()
+            //->status('archived')
             ->paginate(5);
 
         return view('admin.products.index', [
@@ -136,13 +140,15 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(product $product)
+    public function edit($id)
     {
+        $product =product::where('user_id','=','1')
+        ->FindOrFail($id);
         //$product = Product::where('id' , '=',$product->id)->first(); // return model
         // $product = Product::find($product->id); // return model
         ///ولكن ممكن
         $product = Product::findOrFail($product->id); // return model
-
+///يجب تطبيق هذه اللوكال  سكوب على كل الكنترولز ولكن مع القلوبال رح يختصر الطريق
         // if(!$product){
         //     abort(404);
         // }
@@ -241,8 +247,8 @@ class ProductController extends Controller
         // );
 
         Product::destroy($product->id);
-        if ($product->image){
-            Storage::disk('puplic')->delete($product->image);}
+        //if ($product->image){
+           // Storage::disk('puplic')->delete($product->image);}تم النقل الى الفروس ديليت
            // <img src="{{storage::disk('puplic')->delete($product->image)}}" width="60" alt="">
            //<img src="{{storage::disk('puplic')->url($product->image)}}" width="60" alt="">
         ////ليتم حذف صور المنتج عند حذف المنتج
@@ -256,26 +262,32 @@ class ProductController extends Controller
 
     }
     public function trashed(){
-        $product=product::onlyTrashed()->paginate();
+        $products=product::onlyTrashed()->paginate();
         return view ('admin.product.trashed',[
-            'product'=>$product
+            'product'=>$products
         ]);
 
     }
-    public function restore(product $product)
+    public function restore($id)
     {
+        $product=product::onlyTrashed()->findOrFail($id);
         $product -> restore() ;
         return redirect()
         ->route('products.index')
         ->with('success',"product ({$product->name})restored");
 
     }
-    public function forceDelete(product $product)
+    public function forceDelete($id)
     {
+        $product=product::onlyTrashed()->findOrFail($id);
+
         $product -> forceDelete() ;
+        if ($product->image){
+            Storage::disk('puplic')->delete($product->image);}
         return redirect()
         ->route('products.index')
         ->with('success',"product ({$product->name})delte forever");
+
 
     }
 
