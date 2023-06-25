@@ -33,6 +33,12 @@ Route::get('/', function () {
 // Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']);
 
 Route::resource('/admin/products', ProductController::class);
+Route::get('/admin/products/trashed',[ProductController::class,'trashed'])
+->name('products.trashed');
+Route::put('/admin/products/trashed/{product}/restore',[ProductController::class,'restore'])
+->name('products.restore');
+Route::delete('/admin/products/{product}/force',[ProductController::class,'forceDelete'])
+->name('products.force-Delete');
 Route::resource('/admin/categories', CategoryController::class);
 
 

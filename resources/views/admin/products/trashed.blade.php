@@ -49,11 +49,10 @@
 
 <div class="container">
   <h2 class="mb-4 fs-3">
-    <?= $title ?>
+    <?= trashed products ?>
   </h2>
   <header class="mb-4">
-  <a class="btn btn-primary m-3" href="{{route("products.create")}}" role="button">Create Proudct</a>
-  <a href="{{route("products.trashed")}}"class="btn btn-danger m-3"  role="button"><i class="fas fa-trash"></i>trashed</a>
+  <a class="btn btn-primary m-3" href="{{route('products.index')}}" role="button"> Proudct list</a>
 
   </header>
   @if(session()->has('success'))
@@ -67,11 +66,9 @@
         <th></th>
         <th>Id</th>
         <th>Name</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Deleted At</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -86,9 +83,7 @@
             @endif </a> </td>
         <td>{{$product->id}}</td>
         <td>{{$product->name}}</td>
-        <td>{{$product->category_name}}</td>
-        <td>{{$product->price}}</td>
-        <td>{{$product->status}}</td>
+        <td>{{$product->deleted_at}}</td>
         <td><a href="{{route('products.edit' ,$product->id)}}" class="btn btn-sm btn-outline-dark"><i class="far fa-edit"></i> Edit</a></td>
         <td> <form action="{{route('products.destroy',$product->id)}}" method="post">
             @csrf

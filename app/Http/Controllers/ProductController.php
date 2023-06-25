@@ -25,6 +25,7 @@ class ProductController extends Controller
                 'products.*',
                 'categories.name as category_name'
             ])
+            ///->withTrashed()عرض المحزوف وغير المحزوف من السوفت ديليت
             ->paginate(5);
 
         return view('admin.products.index', [
@@ -254,6 +255,30 @@ class ProductController extends Controller
         ->with('success','"product({$product->name})deleted"') ;//get
 
     }
+    public function trashed(){
+        $product=product::onlyTrashed()->paginate();
+        return view ('admin.product.trashed',[
+            'product'=>$product
+        ]);
+
+    }
+    public function restore(product $product)
+    {
+        $product -> restore() ;
+        return redirect()
+        ->route('products.index')
+        ->with('success',"product ({$product->name})restored");
+
+    }
+    public function forceDelete(product $product)
+    {
+        $product -> forceDelete() ;
+        return redirect()
+        ->route('products.index')
+        ->with('success',"product ({$product->name})delte forever");
+
+    }
+
       /* protected function messages (){
 
         return[
@@ -279,4 +304,6 @@ class ProductController extends Controller
         ];
 
        }تم النقل الى برودكت ريكوست في ملف الكنترولز*/
+
 }
+
