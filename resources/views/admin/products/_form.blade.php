@@ -56,11 +56,20 @@
     <img src="https://fakeimg.pl/100x100" alt="">
     @endif </a> </td>
         </div>
-        <div class="mb-3"></div>
-        <div>
+        <div class="mb-3">
+
             <input type="file" class="form-control" id="gallery" name="gallery[]" multiple placeholder="product gallery">
 
             <label for="image"> gallery image</label>
+            @if ($gallery ?? false)
+                <div class="row">
+                    @foreach ($gallery as $image)
+                    <div class="col-md-3">
+                        <img src="/storage{{$image->url}}" class="img_fluid" alt="">
+                    </div>
+                    @endforeach
+                </div>
+                @endif
         </div>
 
 
@@ -120,15 +129,7 @@
 
                     <label for="image"> product image</label>
                 </div>
-                @if ($gallery ?? false)
-                <div class="row">
-                    @foreach ($gallery as $image)
-                    <div class="col-md-3">
-                        <img src="/storage{{$image->url}}" class="img_fluid" alt="">
-                    </div>
-                    @endforeach
-                </div>
-                @endif
+
 
     </div>
   </div>

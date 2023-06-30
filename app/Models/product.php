@@ -20,7 +20,7 @@ class product extends Model {
     const STATUS_ARCHIVED = 'archived';
     protected $fillable = [
         'name','slug' , 'category_id', 'description', 'short_descripion','price',
-        'compare_price' , 'image','status'
+        'compare_price' , 'image','status','review'
     ];//////////FOR DEFUALT VALUES
     //protected $guarded= []; fillable more secure
     /*protected static function booted()
@@ -63,12 +63,16 @@ class product extends Model {
 
              return ucwords($value) ;}
 
-            /////// public function getPriceFormattedAttribute($value) للمهندس ضروري
-         /*    {
+             public function getPriceFormattedAttribute($value) //للمهندس ضروري
+          {
                 $formater=new NumberFormatter('en',NumberFormatter::CURRENCY);
-                return  $formater->formatCurrency($this->price,'USD');
+                return  $formater->formatCurrency($this->price,'USD');}
+
+             public function getcomparepriceformattedAttribute()
+         {
 
 
-*/
+            $formater=new NumberFormatter('en',NumberFormatter::CURRENCY);
+                return  $formater->formatCurrency($this->compare_price,'USD');}
 
              }

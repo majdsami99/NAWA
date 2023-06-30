@@ -8,12 +8,14 @@ use Illuminate\View\Component;
 
 class ShopLayout extends Component
 {
+    public $title;
+    public $showbreadcrump;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($title,$showbreadcrump=true)
     {
-        //
+        $this->title=$title;
     }
 
     /**
@@ -21,6 +23,8 @@ class ShopLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.shop');
+        return view('layouts.shop',[
+            'title'=>$this->title,
+        ]);
     }
 }

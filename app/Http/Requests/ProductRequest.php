@@ -38,6 +38,7 @@ class ProductRequest extends FormRequest
             'status'=>'required|in:active,draft,archived',
             'gallery'=> 'nullable|array',
             'gallery.*'=>'image',
+            'review'=>'',
 
         ];
 

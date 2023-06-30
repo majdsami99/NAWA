@@ -24,6 +24,8 @@ class ProductSeeder extends Seeder
             'status' => 'active',
             'category_id' => '1',
             'created_at' => now(),
+            'reviwe'=> '',
+
 
 
         ]);

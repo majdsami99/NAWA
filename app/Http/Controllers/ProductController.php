@@ -123,6 +123,11 @@ class ProductController extends Controller
               ]);
             }
             }
+            ////Increment the Reviews column of the associated product
+
+            $product = Product::findOrFail($request->product_id);
+            $product->increment('review');
+
 
         return redirect()
           ->route('products.index')
@@ -161,6 +166,8 @@ class ProductController extends Controller
             'categories' => $categories ,
             'status_options'=> product::statusOptions(),
             'gallery'=>$gallery,
+            compact('product','review'),
+
 
         ]);
 

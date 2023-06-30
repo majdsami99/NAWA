@@ -29,7 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(RouteServiceProvider::HOME); ///انا مثلا كنت بدي صفحة كزا وكان لازم اعمل لوق ان بعد اللوق ان بروح بعيها مبشارة للصفحة الي طلبتها
+        // واذا ماكان في صفحة مطلوبة بروحلي على الهوم
+
     }
 
     /**

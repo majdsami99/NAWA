@@ -39,12 +39,12 @@ class LoginRequest extends FormRequest
      */
     public function authenticate(): void
     {
-        $this->ensureIsNotRateLimited();
-        auth::attempt([
+       $this->ensureIsNotRateLimited();  //by defualt you have 5 attempt
+       /* auth::attempt([
             'email'=>'majdsami101@gmail.com',
             'password'=>'xxx'
 
-        ], true ); //or false  
+        ], true ); //or false بعد سلعة من المحاضرة تاريخ 25/6*/
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        RateLimiter::clear($this->throttleKey());
+        RateLimiter::clear($this->throttleKey());  ///لمسح عدد اللوقات ان الفاشلة
     }
 
     /**
