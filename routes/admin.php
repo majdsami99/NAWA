@@ -22,8 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/products', ProductController::class);
 Route::get('/products/trashed',[ProductController::class,'trashed'])
-->name('products.trashed');
-//->Middleware('auth');  //من هنا جاءت فكرة الراوت قروب لانو رح استخدمها في كل راوت تقريبا
+->name('products.trashed')
+->Middleware('auth');
+ //من هنا جاءت فكرة الراوت قروب لانو رح استخدمها في كل راوت تقريبا
 Route::put('/products/trashed/{product}/restore',[ProductController::class,'restore'])
 ->name('products.restore');
 Route::delete('/products/{product}/force',[ProductController::class,'forceDelete'])
