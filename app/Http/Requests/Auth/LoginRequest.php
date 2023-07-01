@@ -40,7 +40,7 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
        $this->ensureIsNotRateLimited();  //by defualt you have 5 attempt
-       /* auth::attempt([
+       auth::attempt([
             'email'=>'majdsami101@gmail.com',
             'password'=>'xxx'
 

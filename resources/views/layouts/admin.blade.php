@@ -182,8 +182,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href{{route('profile.edit')}} class="d-block">{{Auth::user()->name}}</a>
-                        <form action=""
+                        <a href{{ route('profile.edit') }} class="d-block">{{Auth::user()->name}}</a>
+                        <form action="{{route('logout')}}" method="post">
+                        @csrf
+                        <button type="sumbit"class="btn btn-sm btn-outline-danger">LogOut</button>
+                        </form>
                     </div>
 
                 </div>

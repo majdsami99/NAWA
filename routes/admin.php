@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Middleware\EnsureUserType;
+//use App\Http\Middleware\EnsureUserType;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Route::middleware(['auth',EnsureUserType::class])->prefix('/admin')->group(function(){
-    Route::middleware(['auth','auth.type:admin,super-admin'])->prefix('/admin')->group(function(){
+    Route::middleware(['auth','auth.type:admin,super-admin','admin'])->prefix('/admin')->group(function(){
 
 Route::resource('/products', ProductController::class);
 Route::get('/products/trashed',[ProductController::class,'trashed'])
