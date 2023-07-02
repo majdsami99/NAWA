@@ -1,11 +1,8 @@
-
-<?php
-<x-Shop-Layout title='Home' :show-breadcrump="false" />
 <!DOCTYPE html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>{{ $title }} | {{ config('app.name' ) }} </title>
     <meta name="description" content="" />
@@ -17,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css ') }}" />
     <link rel="stylesheet" href="{{ asset('ssets/css/glightbox.min.css') }} "/>
-    <link rel="stylesheet"="{{ asset('assets/css/main.css' ) }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css' ) }}" />
 
 </head>
 
@@ -89,18 +86,20 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
+
                             <div class="user">
                                 <i class="lni lni-user"></i>
                                 Hello
                             </div>
                             <ul class="user-login">
                                 <li>
-                                    <a href="login.html">Sign In</a>
+                                    <a href="{{route('login')}}">Sign In</a>
                                 </li>
                                 <li>
-                                    <a href="register.html">Register</a>
+                                    <a href="{{route('register')}}">Register</a>
                                 </li>
                             </ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -114,7 +113,7 @@
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
                         <a class="navbar-brand" href="index.html">
-                            <img src="{{assets('assets/images/logo/logo.svg')}}" alt="Logo">
+                            <img src="{{asset('assets/images/logo/logo.svg')}}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
                     </div>
@@ -515,7 +514,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="{{assets('assets/images/logo/white-logo.svg)}}" alt="#">
+                                    <img src="{{ asset('assets/images/logo/white-logo.svg') }}" alt="#">
                                 </a>
                             </div>
                         </div>
@@ -658,10 +657,10 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script src="{{ asset('assets/js/bootstrap.min.js' }}"></script>
-    <script src="{{ asset('assets/js/tiny-slider.js' }}"></script>
-    <script src="{{ asset('assets/js/glightbox.min.js' }}"></script>
-    <script src="{{ asset('assets/js/main.js' }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
+    <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
     <script type="text/javascript">
         //========= Hero Slider
         tns({
@@ -734,7 +733,7 @@
         timer();
         setInterval(timer, 1000);
     </script>
-    <script type="{{assets('text/javascript'}}">
+    <script type="{{asset('text/javascript') }}">
 
         //========= glightbox
         GLightbox({

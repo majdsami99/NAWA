@@ -60,8 +60,9 @@
         <th></th>
         <th>Id</th>
         <th>Name</th>
+        <th>count</th>
         <th>Edit</th>
-        <th>Delete</th>
+        <th></th>
 
       </tr>
     </thead>
@@ -80,6 +81,7 @@
         <td>{{$category->id}}</td>
 
         <td>{{$category->name}}</td>
+        <td>{{$category->products_count}} </td>
 
         <td><a href="{{route('categories.edit' ,$category->id)}}" class="btn btn-sm btn-outline-dark"><i
               class="far fa-edit"></i> Edit</a></td>

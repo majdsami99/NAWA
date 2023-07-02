@@ -20,8 +20,8 @@ class EnsureUserType
         //if($user->type=='user'){
             if(! in_array($user->type,$types)){
 
-            //abort(403,'Unauthorized action.');
-            return redirect('/login');
+            abort(403,'Unauthorized action.');
+            //return redirect('/login');
         }
 
         return $next($request);

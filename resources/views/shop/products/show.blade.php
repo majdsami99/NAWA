@@ -254,6 +254,16 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <h2> similar products </h2>
+                <div class="row">
+                @foreach ($product->category->products()->where('id','!=','product->id')->orderby('price')->get() as $similar_product )
+                  <div class="col-lg-3 col-md-6 col 12">
+                    <x-product-card :product="similar_product" />
+                @endforeach
+            </div>
+            </div>
+
         </div>
     </section>
     <!-- End Item Details -->

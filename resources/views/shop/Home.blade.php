@@ -1,4 +1,4 @@
-<x-shop-layout :title="$products->name" />
+<x-shop-layout title="Home" />
     <!-- Start Hero Area -->
 <section class="hero-area">
     <div class="container">

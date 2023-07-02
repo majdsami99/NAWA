@@ -1,3 +1,4 @@
+
 @if ($errors->any())
 <div class="alert alert-danger">
     you have some errors :
@@ -73,8 +74,9 @@
         </div>
 
 
-
     </div>
+
+
     <div class="colum-md-4">
         <div class="mb-3">
             <label for="status">status</label>

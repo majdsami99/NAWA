@@ -2,34 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
-use App\Models\category;
 use App\Models\product;
+use App\Models\ProductImage;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
 
-public $product ;
-class ProductController extends Controller
+class ProductsController extends Controller
 {
-public function index(){
+    //
+    public function index(){
 
+    }
+
+    public function show($slug){
+
+        $product= product::active()
+        ->withoutGlobalScope('owner')
+        ->where('slug','=',$slug)
+        ->firstorfail();
+        $gallery=ProductImages::where('product_id','=',$product->id)
+        ->get();
+        return view ('shop.products.show',[
+            'product'=> $product,
+            'gallery'=>$gallery,
+        ]);
+
+    }
 }
-public function show($slug){
-    product::acitve()
-    ->withoutGlobalScope('owner')
-    ->where('slug','=',$slug)
-    ->firstorfail();
-    $gallery=ProductImages::where('product_id','=',$product->id)
-    ->get();
-
-    return view ('shop.products.show',[
-        'product'=> $product,
-        'gallery'=>$gallery,
-    ]);
-
-}
-}
-

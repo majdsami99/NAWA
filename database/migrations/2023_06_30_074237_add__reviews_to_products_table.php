@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->foreignId('review')
+            $table->foreignId('id')
             ->default(0)
             ->nullable();
         });

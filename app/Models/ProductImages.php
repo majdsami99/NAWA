@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Storage;
 class ProductImages extends Model
 {
     use HasFactory;
-    protected $fillable =[
-    'product_id','image' ];
+    protected $fillable = [
+        'product_id', 'image'
+    ];
 
-public function getIUrlAttribute()
-{
+    public function getIUrlAttribute()
+    {
 
-  if($this->image){
-     return Storage ::disk('public')->url($this->image);
-
+        if ($this->image) {
+            return Storage::disk('public')->url($this->image);
+        }
     }
-
-}
 }

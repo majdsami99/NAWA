@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 //use Illuminate\Support\Eloquent\addGlobalScope;
 use Illuminate\Database\Eloquent\Builder\addGlobalScope;
-
+use Illuminate\Support\Facades\Auth;
 use NumberFormatter;
 
 
@@ -20,15 +21,26 @@ class product extends Model {
     const STATUS_ARCHIVED = 'archived';
     protected $fillable = [
         'name','slug' , 'category_id', 'description', 'short_descripion','price',
-        'compare_price' , 'image','status','review'
+        'compare_price' , 'image','status','review','user_id'
     ];//////////FOR DEFUALT VALUES
     //protected $guarded= []; fillable more secure
-    /*protected static function booted()
+    protected static function booted()
     {
         static::addGlobalScope('owner',function(Builder $query){
-            $query->where('user_id','=',1);});
+            $query->where('user_id','=',Auth::id());});
 
-    }*/
+    }
+    public function category()
+    {
+        return $this -> BelongsTo(category::class,'category_id')->withDefault([
+            'name'=>'uncategorized',
+            //'image'=>
+        ])
+        ;
+    }
+    public function  gallery(){
+        return $this->hasMany(ProductImages::class);
+    }
     public function scopeActive(Builder $query){
         $query->where('Status','=','active');
 
@@ -52,7 +64,7 @@ class product extends Model {
         {
 
           if($this->image){
-             return Storage ::disk('public')->URL($this->image);
+             return Storage ::disk('public')->Url($this->image);
 
             }
     return 'https://fakeimg.pl/600x400';

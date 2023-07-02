@@ -61,6 +61,10 @@
     {{ session('success')}}
   </div>
   @endif
+  {{--فلترة --}}
+  <form action ="{{url::current}}"" method="get" class= "form-inline">
+    <input type ="text" name="search" value="{{ request('search')}}" class="form-control" >
+    <select name ="status">
   <table class="table">
     <thead>
       <tr>

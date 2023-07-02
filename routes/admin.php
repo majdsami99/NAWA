@@ -18,18 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Route::middleware(['auth',EnsureUserType::class])->prefix('/admin')->group(function(){
-    Route::middleware(['auth','auth.type:admin,super-admin','admin'])->prefix('/admin')->group(function(){
+Route::middleware(['auth', 'auth.type:admin,super-admin'])->prefix('/admin')->group(function () {
 
-Route::resource('/products', ProductController::class);
-Route::get('/products/trashed',[ProductController::class,'trashed'])
-->name('products.trashed')
-->Middleware('auth');
- //من هنا جاءت فكرة الراوت قروب لانو رح استخدمها في كل راوت تقريبا
-Route::put('/products/trashed/{product}/restore',[ProductController::class,'restore'])
-->name('products.restore');
-Route::delete('/products/{product}/force',[ProductController::class,'forceDelete'])
-->name('products.force-Delete');
-Route::resource('/categories', CategoryController::class);
+    Route::resource('/products', ProductController::class);
+    Route::get('/products/trashed', [ProductController::class, 'trashed'])
+        ->name('products.trashed')
+        ->Middleware('auth');
+    //من هنا جاءت فكرة الراوت قروب لانو رح استخدمها في كل راوت تقريبا
+    Route::put('/products/trashed/{product}/restore', [ProductController::class, 'restore'])
+        ->name('products.restore');
+    Route::delete('/products/{product}/force', [ProductController::class, 'forceDelete'])
+        ->name('products.force-Delete');
+    Route::resource('/categories', CategoryController::class);
 });
 //prefix رح ياخد لكل راوت /admin
 //

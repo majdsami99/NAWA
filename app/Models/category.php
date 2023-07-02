@@ -25,7 +25,7 @@ class category extends Model
     }*/
     protected $fillable =[
         'name',
-        
+
 
 
     ];
@@ -38,6 +38,9 @@ class category extends Model
 
         }
 return 'https://fakeimg.pl/600x400';
+    }
+    public function product(){
+        return $this->hasMany(product::class,'category_id');
     }
 
 }
