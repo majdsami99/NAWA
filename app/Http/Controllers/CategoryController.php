@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\product;
 use App\Models\category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = category::all();
-        $categories=category::withcount('product')->paginate();
+        $categories=category::withcount('products')->paginate();
         return view('admin.Categories.index',[
             'categories'=>$categories,
 

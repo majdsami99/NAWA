@@ -18,7 +18,7 @@ class trendingproducts extends Component
     {
         $this->title=$title;
         $this->products=product::withoutGlobalScope('owner')
-        ->with('category') //eager load تنفيذ جملتين الاستعلام وجملة استرجاع ال10 جمل
+        ->with('category','user') //eager load تنفيذ جملتين الاستعلام وجملة استرجاع ال10 جمل
         ->active()->latest('updated_at')
         ->take($count) ///limit(8)
         ->get();

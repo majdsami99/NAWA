@@ -20,4 +20,12 @@ class ProductImages extends Model
             return Storage::disk('public')->url($this->image);
         }
     }
+    public function product()
+    {
+        return $this -> BelongsTo(product::class,'')->withDefault([
+            'name'=>'no images',
+            //'image'=>
+        ])
+        ;
+    }
 }

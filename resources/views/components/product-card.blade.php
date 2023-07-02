@@ -8,7 +8,8 @@
     </div>
     <div class="product-info">
         <span class="category">{{ $product->category()->first() }} </span>
-       {{-- <span class="category">{{ $product->category->name}}</span> --same as above--}}
+       {{-- <span class="category">{{ $product->category->name}}</span> --same as above
+       شلت النيم لانو بعملو ايرور--}}
         <h4 class="title">
             <a href="{{route('shop.products.show',$product->slug)}}">{{$product->name}}</a>
         </h4>
@@ -21,7 +22,7 @@
             <li><span>4.0 Review(s)</span></li>
         </ul>
         <div class="price">
-            <span>{{$product->price_formatted}}</span>
+            {{$product->price_formatted}}
             @if ($product->compare_price)
             <span class="discount-price">{{$product->compare_price_formatted}}</span>
             @endif

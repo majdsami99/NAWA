@@ -39,7 +39,7 @@ class category extends Model
         }
 return 'https://fakeimg.pl/600x400';
     }
-    public function product(){
+    public function products(){
         return $this->hasMany(product::class,'category_id');
     }
 
