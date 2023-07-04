@@ -20,10 +20,10 @@ class cart extends Pivot
     public function product(){
         return $this->belongsTo(product::class);
     }
-    public function uniqueIds()
+    /* public function uniqueIds()
     {
         return[
-            'id','cookie_id'
+            'id',//'cookie_id'
         ]; /// وجبت هذه الفنكشن لانه يوجد اكثرمن منغير للuuid
-    }
+    } */
 }

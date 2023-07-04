@@ -39,6 +39,14 @@ class product extends Model {
         ])
         ;
     }
+    public function user()
+    {
+        return $this -> BelongsTo(category::class,'user_id')->withDefault([
+            'name'=>'no user',
+            //'image'=>
+        ])
+        ;
+    }
 
     public function  gallery(){
         return $this->hasMany(ProductImages::class);

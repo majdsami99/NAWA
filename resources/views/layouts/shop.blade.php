@@ -86,7 +86,8 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-                            @if(! Auth::chek(())   {{--@auth @endauth---}})
+                            @if( Auth::check())
+
                             <div class="user">
                                 <i class="lni lni-user"></i>
                                 {{Auth::user()->profile->first_name}}

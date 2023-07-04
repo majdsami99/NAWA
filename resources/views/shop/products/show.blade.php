@@ -34,6 +34,7 @@
                             </h3>
                             <p class="info-text">{{$product->short_descripion}}</p>
                             <div class="row">
+                                <form
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
                                         <label class="title-label" for="size">Choose color</label>
@@ -82,7 +83,7 @@
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" style="width: 100%;">Add to Cart</button>
+                                            <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

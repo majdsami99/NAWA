@@ -49,7 +49,7 @@
 
 <div class="container">
   <h2 class="mb-4 fs-3"></h2>
-    <?= ('trashed') ?>
+    <?= trashed products ?>
   <header class="mb-4">
   <a class="btn btn-primary m-3" href="{{route('products.index')}}" role="button"> Proudct list</a>
 

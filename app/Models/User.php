@@ -45,9 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
     public function profile(){
-        return $this->hasOne(profile::class)->withDefault([
-            'name'=> 'no NAME',
-        ]);
+        return $this->hasOne(profile::class)->withDefault(
+        );
     }
     public function products(){
         return $this->hasMany(product::class);
@@ -64,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'id' /////////////
 
         )
-        ///مور اضافية ممكن نضيفها للريليشن 
+        ///مور اضافية ممكن نضيفها للريليشن
         ->withPivot(['quantity'])
         ->using(cart::class);
 

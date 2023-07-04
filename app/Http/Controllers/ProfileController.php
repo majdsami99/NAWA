@@ -36,7 +36,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
-        $user->profile->fill($request->validated())->save; /// fill على  مستوى البروفايل 
+        $user->profile->fill($request->validated())->save(); /// fill على  مستوى البروفايل
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
