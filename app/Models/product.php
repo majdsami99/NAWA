@@ -43,6 +43,21 @@ class product extends Model {
     public function  gallery(){
         return $this->hasMany(ProductImages::class);
     }
+    public function cart(){
+        return $this->belongsToMany(
+        user::class, ////related model (product)
+        'carts',        //ألجدول الوسيط
+        'product_id' ,    //FK related model in pivot table
+        'user_id',
+        'id',
+        'id' /////////////
+
+        )
+        ///مور اضافية ممكن نضيفها للريليشن
+        ->withPivot(['quantity'])
+        ->using(cart::class);
+
+    }
     public function scopeActive(Builder $query){
         $query->where('Status','=','active');
 
