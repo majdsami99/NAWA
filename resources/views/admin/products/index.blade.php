@@ -61,10 +61,19 @@
     {{ session('success')}}
   </div>
   @endif
-  {{--فلترة --}}
-  {{--<form action ="{{url::current}}"" method="get" class= "form-inline">
-    <input type ="text" name="search" value="{{ request('search')}}" class="form-control" > --}}
-    <select name ="status">
+
+  {{--فلترة {{url::current}}===route('products.index')--}}
+  <form action ="{{url::current}}" method="get" class= "form-inline">
+    <input type ="text" name="search" value="{{ request('search')}}" class="form-control mb-2 mr-2" placeholder="Search">
+    <select name ="status" class="form-conrtol mb-2 mr-2">
+        <option value="">status</option>
+        <option value="active" @selected(request('status')== 'active')>active</option>
+        <option value="archived" @selected(request('status')== 'archived')>archived</option>
+        <option value="draft" @selected(request('status')== 'draft')>draft</option>
+    </select>
+    
+    <button type="submit" class="btn btn-dark">filtter</button>
+
   <table class="table">
     <thead>
       <tr>

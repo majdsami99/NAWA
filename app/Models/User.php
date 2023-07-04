@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
     public function profile(){
         return $this->hasOne(profile::class)->withDefault([
-            'name'=> 'mmmmmmmmmmmmmmmmmm'
+            'name'=> 'no NAME',
         ]);
     }
 

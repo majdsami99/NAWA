@@ -86,7 +86,22 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="top-end">
-
+                            @if(! Auth::chek(())   {{--@auth @endauth---}})
+                            <div class="user">
+                                <i class="lni lni-user"></i>
+                                {{Auth::user()->profile->first_name}}
+                            </div>
+                            <ul class="user-login">
+                                <li>
+                                    <a href="{{route('profile.edit')}}">profile</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getelementbyid('logoutform').submit()">Log Out</a>
+                                </li>
+                            </ul>
+                            <form id="logoutform" action="{{route('logout')}}" method="POST" style="display": none> </form>
+                            @csrf
+                            @else
                             <div class="user">
                                 <i class="lni lni-user"></i>
                                 Hello
@@ -99,7 +114,7 @@
                                     <a href="{{route('register')}}">Register</a>
                                 </li>
                             </ul>
-                            
+                            @endif
                         </div>
                     </div>
                 </div>

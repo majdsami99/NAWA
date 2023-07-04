@@ -18,7 +18,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
 
         $products = Product::leftjoin('categories', 'categories.id', '=', 'products.category_id')
@@ -26,6 +26,17 @@ class ProductController extends Controller
                 'products.*',
                 'categories.name as category_name'
             ])
+            ->when($request->search,function($query,$value){
+                ////$query->where('products.name','like',"%{$value}%");
+               // ->orwhere('products.name','like',"%{$value}%");
+               $query->where(function($query)use ($value){
+                $query->where('products.name','like',"%{$value}%")
+               ->orwhere('products.name','like',"%{$value}%");
+               });
+            })
+            ->when($request->status,function($query,$value){
+                $query->where('products.descriptoin','=',$value);
+            })
             //->where('user_id','=','2') //بدي بس المنتجات للزبون رقم واحد
             //->withoutGlobalScope('owner')  زبطت
             ///->withTrashed()عرض المحزوف وغير المحزوف من السوفت ديليت
@@ -77,7 +88,7 @@ class ProductController extends Controller
        if($request->hasFile('image')){
         $file =$request->file('image');
         //$file ->getMimeType();
-        $path= $file ->store('uploads/images',
+        $path= $file->store('uploads/images',
         ['disk'=>'public' ]);
         $data['image']=$path;
        }

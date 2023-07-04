@@ -18,6 +18,8 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            //'user' =>Auth::user(), نفس النتيجة مع الجملة االسابقة
+
         ]);
     }
 
@@ -26,13 +28,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user=$request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
+        if ($user->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+        $user->profile->fill($request->validated())->save; /// fill على  مستوى البروفايل 
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

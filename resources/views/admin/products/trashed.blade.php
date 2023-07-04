@@ -48,9 +48,8 @@
 @section('content')
 
 <div class="container">
-  <h2 class="mb-4 fs-3">
-    <?= trashed products ?>
-  </h2>
+  <h2 class="mb-4 fs-3"></h2>
+    <?= ('trashed') ?>
   <header class="mb-4">
   <a class="btn btn-primary m-3" href="{{route('products.index')}}" role="button"> Proudct list</a>
 

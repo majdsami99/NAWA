@@ -28,6 +28,7 @@ class product extends Model {
     {
         static::addGlobalScope('owner',function(Builder $query){
             $query->where('user_id','=',Auth::id());});
+            ///https://www.youtube.com/watch?v=EELV8At5k_w&list=PL13Ag2mfco65-h--rXY_9o-DYCIPCCuP8&index=47
 
     }
     public function category()
@@ -38,7 +39,7 @@ class product extends Model {
         ])
         ;
     }
-   
+
     public function  gallery(){
         return $this->hasMany(ProductImages::class);
     }
