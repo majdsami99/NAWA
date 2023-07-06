@@ -65,6 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
         )
         ///مور اضافية ممكن نضيفها للريليشن
         ->withPivot(['quantity'])
+        ->withTimestamps()
         ->using(cart::class);
 
     }

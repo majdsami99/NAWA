@@ -24,11 +24,12 @@ class product extends Model {
         'compare_price' , 'image','status','review','user_id'
     ];//////////FOR DEFUALT VALUES
     //protected $guarded= []; fillable more secure
+
     protected static function booted()
     {
-        static::addGlobalScope('owner',function(Builder $query){
+       /* static::addGlobalScope('owner',function(Builder $query){
             $query->where('user_id','=',Auth::id());});
-            ///https://www.youtube.com/watch?v=EELV8At5k_w&list=PL13Ag2mfco65-h--rXY_9o-DYCIPCCuP8&index=47
+ ///https://www.youtube.com/watch?v=EELV8At5k_w&list=PL13Ag2mfco65-h--rXY_9o-DYCIPCCuP8&index=47  */
 
     }
     public function category()
@@ -72,6 +73,26 @@ class product extends Model {
     }
     public function scopeStatus(Builder $query,$status){
         $query->where('Status','=',$status);
+
+    }
+    public function scopeFilter(Builder $query,$filter){
+       $query->when($filter['search'] ?? false,function($query,$value){
+            ////$query->where('products.name','like',"%{$value}%");
+           // ->orwhere('products.name','like',"%{$value}%");
+           $query->where(function($query)use ($value){
+            $query->where('products.name','like',"%{$value}%")
+           ->orwhere('products.description','like',"%{$value}%");
+           });
+        })
+        ->when($filter['category_id']?? false,function($query,$value){
+            $query->where('products.category_id','=',$value);
+        })
+        ->when($filter['price_min']?? false,function($query,$value){
+            $query->where('products.price','>=',$value);
+        })
+        ->when($filter['price_max'] ?? false,function($query,$value){
+            $query->where('products.price','<=',$value);
+        });
 
     }
 

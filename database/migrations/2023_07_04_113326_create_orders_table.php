@@ -15,21 +15,21 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user-id')
             ->nullable()
-            -> constrained()
-            -> nullOnDelete();
+            ->constrained()
+            ->nullOnDelete();
             $table->string('custmer_first_name');
             $table->string('custmer_last_name');
             $table->string('custmer_email');
             $table->string('custmer_phone')->nullable();
             $table->string('custmer_addres');
             $table->string('custmer_city');
-            $table->string('custmer_postal_code');
-            $table->string('custmer_province');
+            $table->string('custmer_postal_code')->nullable();
+            $table->string('custmer_province')->nullable();
             $table->char('custmer_country_code');
-            $table->enum('status',['pending','processing','shipped','completed','cancelled','returned']);
+            $table->enum('status',['pending','processing','shipped','completed','cancelled','refunded']);
             $table->enum('payment_status',['pending','paid','failed']);
-            $table->char('currency');
-
+            $table->char('currency')->default('USD');
+            $table->float('total')->default(0);
             $table->timestamps();
         });
     }

@@ -34,7 +34,9 @@
                             </h3>
                             <p class="info-text">{{$product->short_descripion}}</p>
                             <div class="row">
-                                <form
+                                <form action="{{route('cart')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{product_id}}">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
                                         <label class="title-label" for="size">Choose color</label>
@@ -69,7 +71,7 @@
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group quantity">
                                         <label for="color">Quantity</label>
-                                        <select class="form-control">
+                                        <select class="form-control" name="quantity">
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -98,6 +100,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <form>
                         </div>
                     </div>
                 </div>

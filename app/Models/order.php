@@ -21,15 +21,21 @@ class order extends Model
         'custmer_province',
        'custmer_country_code',
        'status',
-        'payment_status'
+        'payment_status',
+        'currency',
+        'total'
 
     ];
     public function user(){
         return $this->belongsTo(User::class);
     }
     public function products(){
-        return $this->belongsTo(product::class,'order_lines')
-        ->withpivot();
+        return $this->belongsToMany(product::class,'order_lines')
+        ->withpivot(['quantity','product_name','price_formatted'])
+        ->using(orderline::class);
+    }
+    public function lines(){
+        return $this->hasMany(orderline::class);
     }
 
 }

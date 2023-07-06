@@ -10,11 +10,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 class ProductController extends Controller
 {
+    public function __construct(request $request){
+       // if($re)
+        $categories = category::all();///collection array
+
+        View::share([
+
+            'categories' => $categories ,
+            /*'status_options'=> [
+                'active'=>'active',
+                'archived'=>'archived',
+                'draft'=>'darft',]
+        */
+        'status_options'=> product::statusOptions()
+            ]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,23 +42,13 @@ class ProductController extends Controller
                 'products.*',
                 'categories.name as category_name'
             ])
-            ->when($request->search,function($query,$value){
-                ////$query->where('products.name','like',"%{$value}%");
-               // ->orwhere('products.name','like',"%{$value}%");
-               $query->where(function($query)use ($value){
-                $query->where('products.name','like',"%{$value}%")
-               ->orwhere('products.name','like',"%{$value}%");
-               });
-            })
-            ->when($request->status,function($query,$value){
-                $query->where('products.descriptoin','=',$value);
-            })
+           ->filter($request->query()) //all or query are same
             //->where('user_id','=','2') //بدي بس المنتجات للزبون رقم واحد
             //->withoutGlobalScope('owner')  زبطت
             ///->withTrashed()عرض المحزوف وغير المحزوف من السوفت ديليت
             //->active()
             //->status('archived')
-            ->paginate(5);
+            ->paginate(10);
 
         return view('admin.products.index', [
             'title' => 'Products List',
@@ -59,13 +65,13 @@ class ProductController extends Controller
         $categories = category::all();///collection array
         return view('admin.products.create',[
             'product' => new Product(),
-            'categories' => $categories ,
-            /*'status_options'=> [
+           /* 'categories' => $categories ,  ////وقفتها لانو عملت الها بلاندكس فيو شير لكل الميثد بلكنترولر
+            'status_options'=> [
                 'active'=>'active',
                 'archived'=>'archived',
                 'draft'=>'darft',]
         */
-        'status_options'=> product::statusOptions()
+        //'status_options'=> product::statusOptions()
     ]);
     }
 
@@ -169,14 +175,14 @@ class ProductController extends Controller
         // if(!$product){
         //     abort(404);
         // }
-        $categories = category::all();///collection array
+       // $categories = category::all();///collection array // عملت هيك لانو عملت فيو شير لكل الميثود بلكنترول بلاندكس
         $gallery=ProductImages::where('product_id','=',$product->id)  ///make relation here one to many images to one product
         ->get();
 
 
         return view('admin.products.edit', ['product' => $product,
-            'categories' => $categories ,
-            'status_options'=> product::statusOptions(),
+            //'categories' => $categories ,
+            /*'status_options'=> product::statusOptions(),*/
             'gallery'=>$gallery,
             compact('product','review'),
 

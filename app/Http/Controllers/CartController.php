@@ -7,16 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use illminate\Support\Str;
+use NumberFormatter;
 
 class CartController extends Controller  //////بلزمنا فالسلة عرضها واضافة منتجات وحزف منتجات
 {
     public function index( request $request){
         $cookie_id=$request->cookie('cart_id');
-        $cart=cart::where('cookie_id','=',$cookie_id) ->get ; ///collection
-        $total=$cart->sum(function($item)){
-            return $item->product->
-        }
+        $cart=cart::with('product')->where('cookie_id','=',$cookie_id) ->get(); ///collection
+        $total=$cart->sum(function($item){
+            return $item->product->price_formatted * $item->quantity;
 
+        });
+        $formatter =  new NumberFormatter('en',NumberFormatter::CURRENCY) ;
+
+
+        return view ('shop.cart', [
+            'cart'=> $cart,
+            'total' => $formatter->formatCurrency($total,'EUR'),
+        ]);
 
     }
     public function store(request $request){
@@ -26,10 +34,11 @@ class CartController extends Controller  //////بلزمنا فالسلة عرض�
         ]);
         $cookie_id=$request->cookie('cart_id');
         if(!$cookie_id){
-            $cookie_id=STR::uuid();
-            Cookie::queue('cart_id',60*24*30);
+            $cookie_id=str::uuid();
+            Cookie::queue('cart_id',$cookie_id, 60 * 24 * 30 );
 
         }
+
         $item= cart::where('$cookie_id','=',$cookie_id)
         ->where('product_id','=',$request->input(('product_id')))
         ->first();
@@ -46,7 +55,7 @@ class CartController extends Controller  //////بلزمنا فالسلة عرض�
 
 
         ]);
-        return back()->with('success','product');
+        return redirect()-> back()->with('success','product add to cart');
 
     }}
     public function destroy($id){

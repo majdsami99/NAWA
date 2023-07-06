@@ -1,4 +1,9 @@
+<!DOCTYPE html>
+<!-- /.card-header -->
+<!-- form start -->
+    <form>
 
+        <div class="card-body">
 @if ($errors->any())
 <div class="alert alert-danger">
     you have some errors :
@@ -14,14 +19,12 @@
 
     <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data">
         @csrf
-
-                <!--<h2 class="mb-4 fs-3"></h2>-->
   <div class="row">
 
     <div class="colum-md-8">
         <div class="mb-3">
             <label for="name">Product Name</label>
-            <input type="text" class="form-control" id="name" @error('name') is-invalid @enderror name="name" placeholder="ProductName"
+            <input type="text" class="form-control" id="name" @error('name')  is-invalid @enderror name="name" placeholder="ProductName"
             value="{{old('name',$product->name)}}">
             @error('name')
 
@@ -74,7 +77,7 @@
         </div>
 
 
-    </div>
+</div>
 
 
     <div class="colum-md-4">
@@ -95,8 +98,6 @@
         <div class="mb-3">
             <label for="category">category</label>
             <select name="category_id" id="category_id" class="form-select form-control">
-
-
                 @foreach ($categories as $category)
                 <option @selected($category->id == old('category_id', $product->category_id)) value="{{$category->id}}">{{$category->name}}
                 </option>
@@ -134,15 +135,25 @@
 
 
     </div>
-  </div>
+ </div>
 
-    <button type="submit" class="btn btn-success">{{$submit_label ?? 'save'}}</button>
-    </form>
+ <div class="card-footer">
+    <button type="submit" class="btn btn-primary">{{$submit_label ?? 'save'}}</button>
 </div>
+</form>
+
+
 
 
 
 {{--
+حزفته وانا بحاول ازبط اللاي اوت تاع شكل الصفحة
+    <div class="container">
+
+    <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data">
+        @csrf
+
+                <!--<h2 class="mb-4 fs-3"></h2>-->
                 <option>cat 2</option>
                 <option>cat 3</option>
                 <option>cat 4</option>
