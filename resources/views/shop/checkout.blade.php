@@ -5,6 +5,33 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
+                   {{-- @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>
+                                {{$error}}
+                            </li>
+                            @endforeach
+                        </ul>
+                        </div>
+                        ----}}
+                        @if(session()->has('errors'))
+                        <div class="alert alert-danger">
+                                    {{session()->get('error')}}
+                        </div>
+                        @endif
+                        @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>
+                                {{$error}}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <div class="checkout-steps-form-style-1">
                         <form action="{{route('checkout')}}" method="post">
                             @csrf
@@ -64,46 +91,36 @@
                                             <div class="single-form form-default">
                                                 <label>Post Code</label>
                                                 <div class="form-input form">
-                                                    <input type="text" placeholder="Post Code">
+                                                    <input type="text" name="custmer_postal_code" value="{{old('custmer_postal_code')}}" placeholder="Post Code">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="single-form form-default">
-                                                <label>Country</label>
+                                                <label>province</label>
                                                 <div class="form-input form">
-                                                    <input type="text" placeholder="Country">
+                                                    <input type="text" name="custmer_province" value="{{old('custmer_province')}}" placeholder="Country">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="single-form form-default">
-                                                <label>Region/State</label>
+                                                <label>country</label>
                                                 <div class="select-items">
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="custmer_country" value="{{old('custmer_counttry')}}">
                                                         <option value="0">select</option>
-                                                        <option value="1">select option 01</option>
-                                                        <option value="2">select option 02</option>
-                                                        <option value="3">select option 03</option>
-                                                        <option value="4">select option 04</option>
-                                                        <option value="5">select option 05</option>
+                                                        @foreach ($countries as $code=>$name )
+                                                        <option  @selected($code==old ('custmer_country_code')) value="{{$code}}">{{$name}}</option>
+                                                        @endforeach
+
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="single-checkbox checkbox-style-3">
-                                                <input type="checkbox" id="checkbox-3">
-                                                <label for="checkbox-3"><span></span></label>
-                                                <p>My delivery and mailing addresses are the same.</p>
-                                            </div>
-                                        </div>
+                                    {{---check box of delivery  is deleted--}}
                                         <div class="col-md-12">
                                             <div class="single-form button">
-                                                <button class="btn" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseFour" aria-expanded="false"
-                                                    aria-controls="collapseFour">next
-                                                    step</button>
+                                                <button class="btn" type="submit">place order</button>
                                             </div>
                                         </div>
                                     </div>
@@ -169,8 +186,4 @@
     </section>
     <!--====== Checkout Form Steps Part Ends ======-->
 
-
-
-
-
-</html>
+   </x-shop-layout>

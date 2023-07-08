@@ -8,7 +8,7 @@
                         <div class="product-images">
                             <main id="gallery">
                                 <div class="main-img">
-                                    <img src="{{$product->iamge_url}}"  id="current" alt="#">
+                                    <img src="{{$product->image_url}}"  id="current" alt="#">
                                 </div>
                                 @if($gallery)
                                 <div class="images">
@@ -36,7 +36,7 @@
                             <div class="row">
                                 <form action="{{route('cart')}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="product_id" value="{{product_id}}">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <div class="col-lg-4 col-md-4 col-12">
                                     <div class="form-group color-option">
                                         <label class="title-label" for="size">Choose color</label>
@@ -261,10 +261,9 @@
             <div>
                 <h2> similar products </h2>
                 <div class="row">
-                @foreach ($product->category->products()->where('id','!=','product->id')->orderby('price')->get()
-                 as $similar_product )
+                @foreach ($product->category->products()->where('id','!=','product->id')->orderby('price')->get() as $similar_product )
                   <div class="col-lg-3 col-md-6 col 12">
-                    <x-product-card :product="similar_product" />
+                    <x-product-card : product="similar_product" />
                 @endforeach
             </div>
             </div>

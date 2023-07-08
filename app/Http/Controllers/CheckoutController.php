@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\order;
 use App\Models\orderline;
+use App\Models\User;
+use App\Notifications\NewOrderNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Intl\Countries;
 
 class CheckoutController extends Controller
 {
-    public function creat(){
-        return view('shop.checkout');
+    public function create(){
+        $countries = Countries::getNames('en') ;
+        return view('shop.checkout',[
+            'countries'=>$countries,
+        ]);
+
 
     }
-    public function stroe(Request $request){
+    public function store(Request $request){
         $validated = $request->validate([
         'custmer_first_name'=>'required',
         'custmer_last_name'=>'required',
@@ -41,21 +48,24 @@ class CheckoutController extends Controller
 
         });
         $validated['total']= $total;
-       $order= order::creat($validated);
+
        DB::beginTransaction();
 try{
-@foreach ($cart as $item){
+    $order= order::creat($validated);
+foreach ($cart as $item){
     orderline::create([
         'order_id'=> $order->id,
-        'product_id'=>$item->product_id,
+        'product_id'=>$item->id,
         'quantity'=>$item->quantity,
         'price'=>$item->product->price,
         'product_name'=>$item->product->name
 
 
     ]);
+
 }
-cart::where('cookie_id','=',$cookie_id)->delete();
+
+///cart::where('cookie_id','=',$cookie_id)->delete();   //////////////////تم الاياقف مؤقتا لانشاء الاوردر
 DB::commit();
 } catch (Exception $e){
 DB::rollBack();
@@ -64,9 +74,20 @@ return back()
 ->withErrors( [
     'errors',$e->getMessage()
 ])
-->with('errors',$e->getMessage());
+->with('errors',$e->getMessage()); //flash msg
 
  }
+  $user= User::where('type','=','super-admin')->first();
+  $user->notify(new NewOrderNotification($order));
+
   return redirect()->route('checkout.success');
- }}
+
+ }
+
+  public function success(){
+    return view ('shop.success');
+  }
+
+
+}
 

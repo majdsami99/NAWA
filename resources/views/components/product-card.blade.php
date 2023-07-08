@@ -1,13 +1,13 @@
  <!-- Start Single Product -->
  <div class="single-product">
     <div class="product-image">
-        <img src={{$product->image_url}} alt="#">
+        <img src="{{ $product->image_url }}" alt="#">
         <div class="button">
             <a href="{{route('shop.products.show',$product->slug)}}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
         </div>
     </div>
     <div class="product-info">
-        <span class="category">{{ $product->category()->first() }} </span>
+        <span class="category">{{ $product->category->name }} </span>
        {{-- <span class="category">{{ $product->category->name}}</span> --same as above
        شلت النيم لانو بعملو ايرور--}}
         <h4 class="title">
@@ -30,6 +30,3 @@
     </div>
 </div>
 <!-- End Single Product -->
-
-
-{{--controller for categories

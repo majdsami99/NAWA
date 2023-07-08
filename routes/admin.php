@@ -30,6 +30,8 @@ Route::middleware(['auth', 'auth.type:admin,super-admin'])->prefix('/admin')->gr
     Route::delete('/products/{product}/force', [ProductController::class, 'forceDelete'])
         ->name('products.force-Delete');
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/orders', ordercontroller::class);
+
 });
 //prefix رح ياخد لكل راوت /admin
 //

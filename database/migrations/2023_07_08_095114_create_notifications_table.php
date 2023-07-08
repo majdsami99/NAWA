@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('type'); ///يوضح نوع النتوفيكشن 
+            $table->string('type'); ///يوضح نوع النتوفيكشن
             $table->morphs('notifiable');
             $table->text('data');
             $table->timestamp('read_at')->nullable();
@@ -28,4 +28,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('notifications');
     }
-};
+}
+;
