@@ -36,7 +36,7 @@ class NewOrderNotification extends Notification
     public function via(object $notifiable): array
     {  //notifiable هو الاوبجكت من اليوزر
         ///mail,database,broadcast,vong (sms),slack فالشرح كل واحدة على حدا
-        return ['mail','database'];
+        return ['mail','database','broadcast'];
     }
 
     /**
@@ -62,12 +62,22 @@ class NewOrderNotification extends Notification
 
         ]);
     }
-    public function toBroadcast(object $notifiable): BroadcastMessage {}
+    public function toBroadcast(object $notifiable): BroadcastMessage {
     /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
-     */
+     *
+    */
+    return new BroadcastMessage([
+        'body'=>" A new order #{$this->order->id} has been created . ",
+        'icon'=> 'fas fa-envelope',
+        'link'=>route('orders.show',$this->order->id),
+        'time'=>now()->diffForHumans()
+
+    ]);
+}
+
     public function toArray(object $notifiable): array
     {
         return [

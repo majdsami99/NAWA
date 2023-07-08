@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MarkNotificationAsRed
+class MarkNotificationAsRead
 {
     /**
      * Handle an incoming request.
@@ -19,7 +19,7 @@ class MarkNotificationAsRed
         if($id && $request->user()){
             $notification=$request->user()->unreadNotifications()->find($id);
             if($notification){
-                $notification->MarkAsRead();
+                $notification->MarkAsRead();  /// فكرته بانه الاشعار يصير صفر بعد ما اقرا جميع النوتيفيشكين
             }
         }
         return $next($request);

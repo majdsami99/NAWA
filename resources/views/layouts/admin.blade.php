@@ -283,6 +283,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+    <script>
+        const userId = "{{ Auth::id() }}";
+    </script>
+    @vite('resources/js/app.js')
+   {{-- <script src="{{asset('build/assets/app-278fa353.js')}}"></script> ---}}
+   {{--السطر الي قبله افضل برمجيا شاهد  محاضرة 6/7/2023----}}
+
 </body>
 
 </html>
